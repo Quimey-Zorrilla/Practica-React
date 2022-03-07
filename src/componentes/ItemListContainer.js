@@ -1,10 +1,15 @@
-function ItemListContainer(props) {
+import ItemCounter from "./ItemCount";
+
+function ItemListContainer({greetings}) {
+    
+    const n = 12;
+
     return(
-        <>
-        <main>
-            <h2>Bienvenido a {props.greeting}, esperamos que encuentre lo que desea!</h2>
-        </main>
-        </>
+        <div>
+            {[...Array(n)].map((e, i) => <p key={i}>{greetings}</p>)}
+            <p>{greetings}</p>
+            <ItemCounter onAdd={() => console.log('Agregado al carrito')} />
+        </div>
     )
 }
 
