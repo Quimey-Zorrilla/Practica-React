@@ -1,15 +1,21 @@
 import ItemCounter from "./ItemCount";
+import ItemList from './ItemList';
+import products from '../products.json';
 
-function ItemListContainer({greetings}) {
-    
-    const n = 12;
+const ItemListContainer = ({greetings}) => {
 
-    return(
+    return (
+        <>
         <div>
-            {[...Array(n)].map((e, i) => <p key={i}>{greetings}</p>)}
             <p>{greetings}</p>
-            <ItemCounter onAdd={() => console.log('Agregado al carrito')} />
+            <ItemCounter onAdd={() => console.log('agregado al carrito')} />
         </div>
+        <div>
+            <h2>INCENTIA cuenta con amplia gama de productos organicos</h2>
+            <ItemList list={products} />
+        </div>
+        </>
+        
     )
 }
 
