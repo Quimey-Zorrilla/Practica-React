@@ -1,6 +1,7 @@
 import ItemCounter from "./ItemCount";
 import ItemList from './ItemList';
 import products from '../products.json';
+import ItemDetailContainer from "./ItemDetailContainer";
 
 const ItemListContainer = ({greetings}) => {
 
@@ -12,10 +13,12 @@ const ItemListContainer = ({greetings}) => {
         </div>
         <div>
             <h2>INCENTIA cuenta con amplia gama de productos organicos</h2>
-            <ItemList list={products} />
+            <ItemList list={products}/>
+        </div>
+        <div>
+            <ItemDetailContainer productList={products}/>
         </div>
         </>
-        
     )
 }
 
