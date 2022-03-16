@@ -1,15 +1,19 @@
 import CartWidget from './CartWidget';
+import {Link, NavLink} from "react-router-dom";
 
 function NavBar() {
     return (
         <>
         <header>
-            <h1><CartWidget/> INCENTIA</h1>
+            <Link to="/">
+                <h1><CartWidget/> INCENTIA</h1>
+            </Link>
             <nav>
                 <ul>
-                    <li><a href="#">Organicos Certificados</a></li>
-                    <li><a href="#">Fisiorresolutivos</a></li>
-                    <li><a href="#">Nutrición de base</a></li>
+                    <li><NavLink to="/categoria/1">Organicos Certificados</NavLink></li>
+                    <li><NavLink to="/categoria/2">Fisiorresolutivos</NavLink></li>
+                    <li><NavLink to="/categoria/3">Nutrición de base</NavLink></li>
+                    <li><NavLink to="/carrito">Carrito</NavLink></li>
                 </ul>
             </nav>
         </header>

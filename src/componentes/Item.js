@@ -1,14 +1,17 @@
-const Item = ({name, price}) => {
+import Btn from "./Btn";
+import { ProductosIniciales } from "./ProductosIniciales";
 
+
+const Item = ({productos}) => {
     return (
-        <li>
-            <button>
-            <p>{name}</p>
-            <h4>
-                <span>${price}</span>
-            </h4>
-            </button>
-        </li>
+        <article>
+            <h2>{productos.nombre}</h2>
+            <img src="https://picsum.photos/200/150" alt=""/>
+            <p>Precio : ${productos.precio}</p>
+            <div>
+                <Btn id={productos.id}/>
+            </div>
+        </article>
     )
 }
 

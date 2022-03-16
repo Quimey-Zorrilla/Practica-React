@@ -1,17 +1,9 @@
-import producto from "../assets/producto.jpg";
-
-const ItemDetail = ({item}) => {
-
-    const {name, copy, price} = item;
-
+const ItemDetail = (producto) => {
     return(
         <div>
-            <img src={producto}/>
-            <p>{name}</p>
-            <p>{copy}</p>
-            <h4>
-                <span>Precio del producto ${price}</span>
-            </h4>
+            <h3>{producto[0].nombre}</h3>
+            <p>Precio ${producto[0].precio}</p>
+            <p>Descripción del Producto: {producto[0].desc}</p>
         </div>
     )
 }

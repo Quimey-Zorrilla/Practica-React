@@ -1,23 +1,52 @@
-import ItemCounter from "./ItemCount";
-import ItemList from './ItemList';
-import products from '../products.json';
-import ItemDetailContainer from "./ItemDetailContainer";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ItemList from "./ItemList";
+import {ProductosIniciales} from "./ProductosIniciales"
 
-const ItemListContainer = ({greetings}) => {
+
+
+
+const ItemListContainer = () => {
+
+    const [productos, setProductos] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false);
+    const {id} = useParams()
+
+
+    useEffect(() => {
+        
+        setLoading(true);
+        const promesa = new Promise((res, rej) => {
+            setTimeout(() => {
+                res(ProductosIniciales);
+            }, 2000)
+        })
+
+        promesa
+            .then((res) => {
+                if (id !== undefined) {
+                    const ProductosFiltrados = ProductosIniciales.filter(producto => producto.id === id)
+                    setProductos(ProductosFiltrados)
+                } else {
+                    setProductos(ProductosIniciales);
+                }
+                //setProductos(productosIniciales)
+            })
+            .catch((error) => {
+                console.log("Error al cargar los productos")
+                setError(true);
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+
+    },[id])
 
     return (
         <>
-        <div>
-            <p>{greetings}</p>
-            <ItemCounter onAdd={() => console.log('agregado al carrito')} />
-        </div>
-        <div>
-            <h2>INCENTIA cuenta con amplia gama de productos organicos</h2>
-            <ItemList list={products}/>
-        </div>
-        <div>
-            <ItemDetailContainer productList={products}/>
-        </div>
+            {loading ? "Cargando..." : <ItemList productos={productos}/>}
+            {error ? <h3>Error al intentar cargar la pagina</h3> : null}
         </>
     )
 }
