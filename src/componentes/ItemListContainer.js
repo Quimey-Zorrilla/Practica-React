@@ -1,54 +1,47 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import ItemList from "./ItemList";
-import {ProductosIniciales} from "./ProductosIniciales"
+import React, { useState, useEffect } from 'react';
+import { ItemList } from './ItemList';
+import { data } from '../pages/data';
 
+/* import de useParams para traer el parametro de la URL */
+import { useParams } from 'react-router-dom';
 
+export const ItemListContainer = ({ greeting }) => {
+    const [items, setItems] = useState([]);
 
+    /* para ponerle un loader */
+    const [loading, setLoading] = useState(true);
 
-const ItemListContainer = () => {
-
-    const [productos, setProductos] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false);
-    const {id} = useParams()
-
+    /* aca desestructuramos lo que trae useParams. el nombre es lo mismo que pusimos nosotros en la URL como parametro */
+    const { catId } = useParams();
 
     useEffect(() => {
-        
+        /* ponemos el loader como true para que muestre el "CARGANDO" cada vez que se re-renderiza*/
         setLoading(true);
-        const promesa = new Promise((res, rej) => {
-            setTimeout(() => {
-                res(ProductosIniciales);
-            }, 2000)
+        const getItems = new Promise((resolve) => {
+        setTimeout(() => {
+            /* aca filtramos por categoria usando un ternario. si catId tiene datos filtra, sino trae todos los productos del array */
+            const myData = catId
+            ? data.filter((item) => item.category === catId)
+            : data;
+
+            resolve(myData);
+        }, 1000);
+        });
+
+        getItems
+        .then((res) => {
+            setItems(res);
         })
+        .finally(() => setLoading(false));
+    }, [catId]);
 
-        promesa
-            .then((res) => {
-                if (id !== undefined) {
-                    const ProductosFiltrados = ProductosIniciales.filter(producto => producto.id === id)
-                    setProductos(ProductosFiltrados)
-                } else {
-                    setProductos(ProductosIniciales);
-                }
-                //setProductos(productosIniciales)
-            })
-            .catch((error) => {
-                console.log("Error al cargar los productos")
-                setError(true);
-            })
-            .finally(() => {
-                setLoading(false)
-            })
-
-    },[id])
-
-    return (
+    /* aca usamos renderizado condicional para mostrar el loader o nuestros productos */
+    return loading ? (
+        <h2>CARGANDO...</h2>
+    ) : (
         <>
-            {loading ? "Cargando..." : <ItemList productos={productos}/>}
-            {error ? <h3>Error al intentar cargar la pagina</h3> : null}
+        <h3 style={{ textAlign: 'center' }}>{greeting}</h3>
+        <ItemList items={items} />
         </>
-    )
-}
-
-export default ItemListContainer;
+    );
+};

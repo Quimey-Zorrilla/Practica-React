@@ -1,18 +1,18 @@
-import Btn from "./Btn";
-import { ProductosIniciales } from "./ProductosIniciales";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-
-const Item = ({productos}) => {
+export const Item = ({ id, name, category, image, price }) => {
+    /* aca tenemos nuestro Link */
     return (
-        <article>
-            <h2>{productos.nombre}</h2>
-            <img src="https://picsum.photos/200/150" alt=""/>
-            <p>Precio : ${productos.precio}</p>
-            <div>
-                <Btn id={productos.id}/>
-            </div>
-        </article>
-    )
-}
-
-export default Item;
+        <Link to={`/product/${id}`}>
+        <div className={`item_card ${category}-category`}>
+            <span>{name}</span>
+            <span>Cat: {category}</span>
+            <span>
+            <img src={image} alt={name} className={'small-img'} />
+            </span>
+            <span>${price}</span>
+        </div>
+        </Link>
+    );
+};
