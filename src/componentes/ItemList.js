@@ -3,10 +3,10 @@ import { Item } from './Item';
 
 export const ItemList = ({ items }) => {
     return (
-        <section className="flex-row">
-        {items?.map((item) => (
+        <section className="product-list">
+            {items?.map((item) => (
             <Item {...item} key={item.id} />
-        ))}
+            ))}
         </section>
     );
 };
